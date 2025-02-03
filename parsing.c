@@ -18,10 +18,10 @@ t_coord	*parsing(int fd)
 	char	*info;
 	t_coord	*map;
 
-	map = malloc(sizeof(t_coord)); // jss pas sur que c necessaire
+	map = malloc(1 * sizeof(t_coord));
 	if (!map)
 		return (NULL);
-	map->map = malloc(1000 * sizeof(char *)); //je malloc pour les chaines return par gnl+
+	map->map = malloc(10000 * sizeof(char *));
 	i = 0;
 	while ((info = get_next_line(fd)) != NULL)
 	{
@@ -44,11 +44,11 @@ int	is_rectangle(t_coord *map)
 			map->x = strlen(map->map[map->y]);
 		else
 			map->x = strlen(map->map[map->y]) - 2;
-		if (map->x != xstart) // si chaque lignes ne fait pas la meme taille
+		if (map->x != xstart)
 			return (0);
 		map->y++;
 	}
-	if (map->x == map->y) // si ce n'est pas rectangle
+	if (map->x == map->y)
 		return (0);
 	return (1);
 }
@@ -64,11 +64,11 @@ int	valide_char(t_coord	*map)
 		j = 0;
 		while (map->map[i][j])
 		{
-			if (map->map[i][j] == '\r') // Ignore '\r' pcq jsp pq il est la lassui
-            {
-                j++;
-                continue;
-            }
+			if (map->map[i][j] == '\r')
+			{
+				j++;
+				continue ;
+			}
 			if (map->map[i][j] != '1' && map->map[i][j] != '0'
 				&& map->map[i][j] != 'P' && map->map[i][j] != 'C'
 				&& map->map[i][j] != 'E' && map->map[i][j] != '\n'
@@ -104,7 +104,7 @@ int	doublon_char(t_coord *map, char a, char b)
 		}
 		i++;
 	}
-	if (count_a != 1 || count_b != 1) // si P et E sont present une fois
+	if (count_a != 1 || count_b != 1)
 		return (0);
 	return (1);
 }
@@ -116,16 +116,16 @@ int	outline1(t_coord *map)
 
 	i = 0;
 	line_len = strlen(map->map[0]);
-	while (i < line_len - 2) // le -2 pr pas prendre \n et \0
+	while (i < line_len - 2)
 	{
-		if(map->map[0][i] != '1')
+		if (map->map[0][i] != '1')
 			return (0);
 		i++;
 	}
 	i = 0;
 	while (i < line_len - 2)
 	{
-		if(map->map[map->y - 1][i] != '1')
+		if (map->map[map->y - 1][i] != '1')
 			return (0);
 		i++;
 	}

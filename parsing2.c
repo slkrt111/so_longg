@@ -37,28 +37,31 @@ char	**copy_map(char **map, int lines)
 {
 	char	**copy;
 	int		i;
-	
+
 	i = 0;
 	copy = malloc(sizeof(char *) * lines + 1);
 	if (!copy)
 		return (NULL);
-	while(i < lines)
+	while (i < lines)
 	{
-		copy[i] = strdup(map[i]); //mettre le ft de libft
+		copy[i] = ft_strdup(map[i]);
 		i++;
 	}
 	copy[lines] = NULL;
 	return (copy);
 }
 
-void 	flood_fill(char **map, int x, int y)
+void	flood_fill(char **map, int x, int y)
 {
 	if (x < 0 || y < 0 || !map[y]
-		|| !map[y][x] || map[y][x] == '1' 
-		|| map[y][x] == 'V')
+		|| !map[y][x] || map[y][x] == '1'
+		|| map[y][x] == 'V' || map[y][x] == 'E')
+	{
+		if (map[y][x] == 'E')
+			map[y][x] = '1';
 		return ;
-	if (map[y][x] == 'E' || map[y][x] == '0'
-		|| map[y][x] == 'C' ||  map[y][x] == 'P')
+	}
+	if (map[y][x] == '0' || map[y][x] == 'C' || map[y][x] == 'P')
 	{
 		map[y][x] = 'V';
 		flood_fill(map, x + 1, y);
@@ -79,14 +82,12 @@ int	map_valid(t_coord *map)
 	startx = find_x(map, 'P');
 	starty = find_y(map, 'P');
 	i = 0;
-	copy = copy_map(map->map, map->y);
-	if (!copy)
-		return (0);
+	copy = copy_map(map->map, map->y); //g enlever les protec !copy pr les lignes
 	flood_fill(copy, startx, starty);
 	while (i < map->y)
 	{
 		j = 0;
-		while(j < map->x)
+		while (j < map->x)
 		{
 			if (copy[i][j] == 'C' || copy[i][j] == 'E')
 				return (0);

@@ -6,7 +6,7 @@
 /*   By: slebik <slebik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:31:04 by slebik            #+#    #+#             */
-/*   Updated: 2025/01/23 13:52:48 by slebik           ###   ########.fr       */
+/*   Updated: 2025/02/03 11:47:36 by slebik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ char	*update_line(char *line, char *buffer)
 }
 
 char	*get_next_line(int fd)
-	{
+{
 	static char	buffer[BUFFER_SIZE + 1];
-	int			bytes;
 	char		*line;
+	int			bytes;
 
 	line = NULL;
 	bytes = 0;
@@ -46,22 +46,13 @@ char	*get_next_line(int fd)
 	{
 		if (buffer[0] == '\0')
 		{
-			bytes = read(fd, buffer, BUFFER_SIZE);
-			if (bytes < 0)
-			{
-				free(line);
-				return (NULL);
-			}
-			if (bytes == 0)
+			bytes = read_to_buffer(fd, buffer);
+			if (bytes <= 0)
 				break ;
-			buffer[bytes] = '\0'; 
 		}
-		line = ft_strjoin(line, buffer);
-		if (line == NULL)
-		{
-			free(line);
+		line = update_line(line, buffer);
+		if (!line)
 			return (NULL);
-		}
 		if (is_nl(buffer))
 			break ;
 	}

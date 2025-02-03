@@ -6,7 +6,7 @@
 /*   By: slebik <slebik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 10:31:48 by slebik            #+#    #+#             */
-/*   Updated: 2025/01/23 13:34:57 by slebik           ###   ########.fr       */
+/*   Updated: 2025/02/03 12:10:30 by slebik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,3 @@ int	is_nl(char *buffer)
 	}
 	return (res);
 }
-
-/* void	fline(char *line)
-{
-	free (line);
-	return ;
-} */

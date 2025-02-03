@@ -13,27 +13,34 @@
 #include "so_long.h"
 #include "minilibx-linux/mlx.h"
 
-// ouvrir la map passer en argument avec ac av pureeee smr
+// ouvrir la map passer en argument avec ac av pureeee smr  >>
+//leaks
+// taille des fonctions >>
+//fermer avec clique
+// le cas arti >>
 
-int main(void)
+int	main(int ac, char **av)
 {
 	int		fd;
 	t_data	*data;
 
+	if (ac != 2)
+		return (write(2, "Error\n", 6), 0);
 	data = malloc(sizeof(t_data));
-	fd = open("map.ber", O_RDONLY);
+	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		perror("Error\n");
+		return (write(2, "Error\n", 6), 0);
 	data->map = parsing(fd);
 	close(fd);
 	if (!data->map->map)
 		return (0);
 	if (verif_all(data->map) == 0)
-		return (write(2 , "Error\n", 6), 0);
+		return (write(2, "Error\n", 6), 0);
 
 
 	data->mlx_ptr = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx_ptr, data->map->x * 80, data->map->y * 80, "so_long");
+	data->mlx_win = mlx_new_window(data->mlx_ptr, data->map->x * 80,
+			data->map->y * 80, "so_long");
 	set_img(data);
 	set_img2(data);
 	render_all(data);

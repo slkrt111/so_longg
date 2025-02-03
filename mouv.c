@@ -12,25 +12,25 @@
 
 #include "so_long.h"
 #include "minilibx-linux/mlx.h"
-# include <X11/keysym.h>
-# include <X11/X.h>
-# include <fcntl.h>
+#include <X11/keysym.h>
+#include <X11/X.h>
+#include <fcntl.h>
 
 
-void top(t_data *data)
+void	top(t_data *data)
 {
 	find_p(data);
 
-	if(data->map->map[data->pos.y - 1][data->pos.x] != '1')
+	if (data->map->map[data->pos.y - 1][data->pos.x] != '1')
 	{	
-		if(!(data->map->map[data->pos.y - 1][data->pos.x] == 'E'))
+		if (!(data->map->map[data->pos.y - 1][data->pos.x] == 'E'))
 		{
 			if (data->map->map[data->pos.y - 1][data->pos.x] == 'M')
 			{
 				printf("game over\n");
 				destroy_all(data);
 			}
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 				data->img.img_end = data->img.img_end2;
 			data->map->map[data->pos.y - 1][data->pos.x] = 'P';
 			data->map->map[data->pos.y][data->pos.x] = '0';
@@ -40,7 +40,7 @@ void top(t_data *data)
 		}
 		else
 		{
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 			{
 				data->img.img_end = data->img.img_end2;
 				printf("the end\n");
@@ -50,20 +50,20 @@ void top(t_data *data)
 	}
 }
 
-void down(t_data *data)
+void	down(t_data *data)
 {
 	find_p(data);
-	
-	if(data->map->map[data->pos.y + 1][data->pos.x] != '1')
+
+	if (data->map->map[data->pos.y + 1][data->pos.x] != '1')
 	{
-		if(!(data->map->map[data->pos.y + 1][data->pos.x] == 'E'))
+		if (!(data->map->map[data->pos.y + 1][data->pos.x] == 'E'))
 		{
 			if (data->map->map[data->pos.y + 1][data->pos.x] == 'M')
 			{
 				printf("game over\n");
 				destroy_all(data);
 			}
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 				data->img.img_end = data->img.img_end2;
 			data->map->map[data->pos.y + 1][data->pos.x] = 'P';
 			data->map->map[data->pos.y][data->pos.x] = '0';
@@ -73,7 +73,7 @@ void down(t_data *data)
 		}
 		else
 		{
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 			{
 				printf("the end\n");
 				destroy_all(data);
@@ -82,20 +82,20 @@ void down(t_data *data)
 	}
 }
 
-void left(t_data *data)
+void	left(t_data *data)
 {
 	find_p(data);
-	
-	if(data->map->map[data->pos.y][data->pos.x - 1] != '1')
+
+	if (data->map->map[data->pos.y][data->pos.x - 1] != '1')
 	{
-		if(!(data->map->map[data->pos.y][data->pos.x - 1] == 'E'))
+		if (!(data->map->map[data->pos.y][data->pos.x - 1] == 'E'))
 		{
 			if (data->map->map[data->pos.y][data->pos.x - 1] == 'M')
 			{
 				printf("game over\n");
 				destroy_all(data);
 			}
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 				data->img.img_end = data->img.img_end2;
 			data->map->map[data->pos.y][data->pos.x - 1] = 'P';
 			data->map->map[data->pos.y][data->pos.x] = '0';
@@ -105,7 +105,7 @@ void left(t_data *data)
 		}
 		else
 		{
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 			{
 				printf("the end\n");
 				destroy_all(data);
@@ -114,20 +114,20 @@ void left(t_data *data)
 	}
 }
 
-void right(t_data *data)
+void	right(t_data *data)
 {
 	find_p(data);
-	if(data->map->map[data->pos.y][data->pos.x + 1] != '1')
+	if (data->map->map[data->pos.y][data->pos.x + 1] != '1')
 	{
-		
-		if(!(data->map->map[data->pos.y][data->pos.x + 1] == 'E'))
+
+		if (!(data->map->map[data->pos.y][data->pos.x + 1] == 'E'))
 		{
 			if (data->map->map[data->pos.y][data->pos.x + 1] == 'M')
 			{
 				printf("game over\n");
 				destroy_all(data);
 			}
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 				data->img.img_end = data->img.img_end2;
 			data->map->map[data->pos.y][data->pos.x + 1] = 'P';
 			data->map->map[data->pos.y][data->pos.x] = '0';
@@ -137,7 +137,7 @@ void right(t_data *data)
 		}
 		else
 		{
-			if(count_c(data->map, 'C') == 0)
+			if (count_c(data->map, 'C') == 0)
 			{
 				printf("the end\n");
 				destroy_all(data);

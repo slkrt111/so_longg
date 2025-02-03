@@ -12,16 +12,16 @@
 
 #include "so_long.h"
 
-int find_x(t_coord *map, char find)
+int	find_x(t_coord *map, char find)
 {
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	while (i < map->y)
 	{
 		j = 0;
-		while(j < map->x)
+		while (j < map->x)
 		{
 			if (map->map[i][j] == find)
 				return (j);
@@ -29,18 +29,19 @@ int find_x(t_coord *map, char find)
 		}
 		i++;
 	}
+	return (0);
 }
 
-int find_y(t_coord *map, char find)
+int	find_y(t_coord *map, char find)
 {
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	while (i < map->y)
 	{
 		j = 0;
-		while(j < map->x)
+		while (j < map->x)
 		{
 			if (map->map[i][j] == find)
 				return (i);
@@ -48,6 +49,7 @@ int find_y(t_coord *map, char find)
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	min_item(t_coord *map, char a)
@@ -77,11 +79,11 @@ int	min_item(t_coord *map, char a)
 int	verif_all(t_coord *map)
 {
 	if (is_rectangle(map) == 0 || valide_char(map) == 0
-			|| doublon_char(map, 'P', 'E') == 0 || min_item(map, 'C') == 0
-			||outline1(map) == 0 || outline2(map) == 0 
-			|| map_valid(map) == 0)
-		return(0);
-	return(1);
+		|| doublon_char(map, 'P', 'E') == 0 || min_item(map, 'C') == 0
+		||outline1(map) == 0 || outline2(map) == 0
+		|| map_valid(map) == 0)
+		return (0);
+	return (1);
 }
 
 void	find_p(t_data *data)

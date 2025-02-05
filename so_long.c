@@ -11,13 +11,15 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "minilibx-linux/mlx.h"
 
 // ouvrir la map passer en argument avec ac av pureeee smr  >>
 //leaks
+//g des printf au lie ude ft
+// mettre tt les cas si une alloc echoue return null pcq il peut limiter la memoire
 // taille des fonctions >>
 //fermer avec clique
 // le cas arti >>
+//makefile
 
 int	main(int ac, char **av)
 {
@@ -29,14 +31,21 @@ int	main(int ac, char **av)
 	data = malloc(sizeof(t_data));
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
+	{
+		free (data);
 		return (write(2, "Error\n", 6), 0);
+	}
 	data->map = parsing(fd);
 	close(fd);
 	if (!data->map->map)
 		return (0);
 	if (verif_all(data->map) == 0)
+	{
+		ft_free_tab(data->map->map);
+		free (data->map);
+		free (data);
 		return (write(2, "Error\n", 6), 0);
-
+	}
 
 	data->mlx_ptr = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx_ptr, data->map->x * 80,
@@ -48,4 +57,5 @@ int	main(int ac, char **av)
 	mlx_hook(data->mlx_win, 17, 1L<<0, &key_press, data);
 	mlx_hook(data->mlx_win, 2, 1L<<0, &key_press, data);
 	mlx_loop(data->mlx_ptr);
+	destroy_all(data);
 }

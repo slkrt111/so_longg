@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "minilibx-linux/mlx.h"
 
 void	render_1(t_data *data)
 {
@@ -97,6 +96,8 @@ int	render_all(t_data *data)
 	final = ft_strjoin(ft_strdup(phrase), mouv);
 	mlx_string_put(data->mlx_ptr, data->mlx_win, data->map->x * 35,
 		data->map->y * 5, 0xFFFFFF, final);
+	free(mouv);
+	free(final);
 	return (1);
 }
 

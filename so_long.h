@@ -21,6 +21,9 @@
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
+#include "minilibx-linux/mlx.h"
+#include <X11/keysym.h>
+#include <X11/X.h>
 
 typedef struct img_s
 {
@@ -135,7 +138,13 @@ void 	right(t_data *data);
 int		key_press(int keysym, t_data *data);
 int		count_c(t_coord *map, char a);
 void	destroy_all(t_data *data);
-
+void	down2(t_data *data);
+void	top2(t_data *data);
+void	left2(t_data *data);
+void	right2(t_data *data);
+int		img_valid(t_data *data);
+int		img_valid2(t_data *data);
+void	destroy_img(t_data *data);
 
 
 

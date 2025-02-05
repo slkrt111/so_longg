@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "minilibx-linux/mlx.h"
 
 int	count_c(t_coord *map, char a)
 {
@@ -37,17 +36,78 @@ int	count_c(t_coord *map, char a)
 
 void	destroy_all(t_data *data)
 {
-	ft_free_tab(data->map->map);
-	mlx_destroy_image(data->mlx_ptr, data->img.img_back);
-	mlx_destroy_image(data->mlx_ptr, data->img.img_collect);
-	mlx_destroy_image(data->mlx_ptr, data->img.img_end);
-	mlx_destroy_image(data->mlx_ptr, data->img.img_player);
-	mlx_destroy_image(data->mlx_ptr, data->img.img_wall);
-	mlx_destroy_image(data->mlx_ptr, data->img.img_enemy);
-	mlx_destroy_window(data->mlx_ptr, data->mlx_win);
-	mlx_destroy_display(data->mlx_ptr);
+	if (data->map)
+	{
+		ft_free_tab(data->map->map);
+		free(data->map);
+	}
+	destroy_img(data);
+	if (data->mlx_win)
+		mlx_destroy_window(data->mlx_ptr, data->mlx_win);
+	if (data->mlx_ptr)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
+	free (data);
 	exit (0);
 }
+void destroy_img(t_data *data)
+{
+	if (data->img.img_back)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_back);
+	if (data->img.img_collect)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_collect);
+	if (data->img.img_wall)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_wall);
+	if (data->img.img_enemy)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_enemy);
+
+	if (data->img.img_player == data->img.img_playerdown)
+		data->img.img_player = NULL;
+	if (data->img.img_player == data->img.img_playerup)
+		data->img.img_player = NULL;
+	if (data->img.img_player == data->img.img_playerleft)
+		data->img.img_player = NULL;
+	if (data->img.img_player == data->img.img_playerright)
+		data->img.img_player = NULL;
+	if (data->img.img_end == data->img.img_end2)
+		data->img.img_end = NULL;
+	
+	if (data->img.img_player)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_player);
+	if (data->img.img_end)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_end);
+	if (data->img.img_end2)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_end2);
+	if (data->img.img_playerdown)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_playerdown);
+	if (data->img.img_playerup)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_playerup);
+	if (data->img.img_playerleft)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_playerleft);
+	if (data->img.img_playerright)
+		mlx_destroy_image(data->mlx_ptr, data->img.img_playerright);
+}
+
+/* 
+int	img_valid(t_data *data)
+{
+	if(data->img.back == NULL || data->img.wall == NULL
+		|| data->img.collect == NULL || data->img.player == NULL
+		|| data->img.playerup == NULL || data->img.playerdown == NULL
+		|| data->img.playerleft == NULL)
+		return (0);
+	return (1);
+}
+
+int	img_valid2(t_data *data)
+{
+	if(data->img.playerright == NULL || data->img.end == NULL
+		|| data->img.end2 == NULL|| data->img.enemy == NULL)
+		return (0);
+	return (1);
+} */
 
 void	set_img(t_data *data)
 {

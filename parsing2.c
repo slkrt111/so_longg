@@ -39,7 +39,7 @@ char	**copy_map(char **map, int lines)
 	int		i;
 
 	i = 0;
-	copy = malloc(sizeof(char *) * lines + 1);
+	copy = malloc(sizeof(char *) * (lines + 1));
 	if (!copy)
 		return (NULL);
 	while (i < lines)
@@ -82,7 +82,9 @@ int	map_valid(t_coord *map)
 	startx = find_x(map, 'P');
 	starty = find_y(map, 'P');
 	i = 0;
-	copy = copy_map(map->map, map->y); //g enlever les protec !copy pr les lignes
+	copy = copy_map(map->map, map->y);
+	if (!copy)
+		return (write(2, "Malloc Error\n", 13), 0);
 	flood_fill(copy, startx, starty);
 	while (i < map->y)
 	{
@@ -90,7 +92,10 @@ int	map_valid(t_coord *map)
 		while (j < map->x)
 		{
 			if (copy[i][j] == 'C' || copy[i][j] == 'E')
+			{
+				ft_free_tab(copy);
 				return (0);
+			}
 			j++;
 		}
 		i++;

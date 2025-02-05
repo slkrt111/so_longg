@@ -12,15 +12,6 @@
 
 #include "so_long.h"
 
-// ouvrir la map passer en argument avec ac av pureeee smr  >>
-//leaks
-//g des printf au lie ude ft
-// mettre tt les cas si une alloc echoue return null pcq il peut limiter la memoire
-// taille des fonctions >>
-//fermer avec clique
-// le cas arti >>
-//makefile
-
 int	main(int ac, char **av)
 {
 	int		fd;
@@ -41,21 +32,26 @@ int	main(int ac, char **av)
 		return (0);
 	if (verif_all(data->map) == 0)
 	{
-		ft_free_tab(data->map->map);
-		free (data->map);
-		free (data);
+		soft_free(data);
 		return (write(2, "Error\n", 6), 0);
 	}
-
 	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		return (soft_free(data));
+	setandrender(data);
+}
+
+void	setandrender(t_data *data)
+{
 	data->mlx_win = mlx_new_window(data->mlx_ptr, data->map->x * 80,
 			data->map->y * 80, "so_long");
+	data->count = 0;
 	set_img(data);
 	set_img2(data);
 	render_all(data);
 	mlx_loop_hook(data->mlx_ptr, &render_all, data);
-	mlx_hook(data->mlx_win, 17, 1L<<0, &key_press, data);
-	mlx_hook(data->mlx_win, 2, 1L<<0, &key_press, data);
+	mlx_hook(data->mlx_win, 17, 1L << 0, destroy_all, data);
+	mlx_hook(data->mlx_win, 2, 1L << 0, &key_press, data);
 	mlx_loop(data->mlx_ptr);
 	destroy_all(data);
 }

@@ -93,7 +93,25 @@ typedef struct data_s
 }				t_data;
 
 
-
+void	ft_putchar(char c);
+int		ft_putstr(char *s);
+void	ft_putnbr(int nb);
+void	ft_putunbr(unsigned int nb);
+int		printd(int n);
+int		printu(unsigned int n);
+int		printc(char c);
+int		printp(unsigned long n);
+int		puthex(unsigned long n, const char *base);
+int		prints(char *str);
+int		printxx(int n);
+int		printx(unsigned long n);
+void	hexx(unsigned int n);
+void	hex(unsigned long n);
+int		countx(unsigned long n);
+int		ucountlen(unsigned int n);
+int		countlen(int n);
+int		ft_printf(const	char *str, ...);
+void	hexx(unsigned int n);
 char	*get_next_line(int fd);
 int		is_nl(char *str);
 int		n_len(int n);
@@ -137,7 +155,7 @@ void 	left(t_data *data);
 void 	right(t_data *data);
 int		key_press(int keysym, t_data *data);
 int		count_c(t_coord *map, char a);
-void	destroy_all(t_data *data);
+int		destroy_all(t_data *data);
 void	down2(t_data *data);
 void	top2(t_data *data);
 void	left2(t_data *data);
@@ -145,10 +163,10 @@ void	right2(t_data *data);
 int		img_valid(t_data *data);
 int		img_valid2(t_data *data);
 void	destroy_img(t_data *data);
-
-
-
-
+void	destroy_img2(t_data *data);
+int		soft_free(t_data *data);
+int		after_floodfill(t_coord *map, char **copy, int i, int j);
+void	setandrender(t_data *data);
 
 #endif
 

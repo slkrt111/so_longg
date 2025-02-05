@@ -82,23 +82,15 @@ int	map_valid(t_coord *map)
 	startx = find_x(map, 'P');
 	starty = find_y(map, 'P');
 	i = 0;
+	j = 0;
 	copy = copy_map(map->map, map->y);
 	if (!copy)
 		return (write(2, "Malloc Error\n", 13), 0);
 	flood_fill(copy, startx, starty);
-	while (i < map->y)
+	if (after_floodfill(map, copy, i, j) == 0)
 	{
-		j = 0;
-		while (j < map->x)
-		{
-			if (copy[i][j] == 'C' || copy[i][j] == 'E')
-			{
-				ft_free_tab(copy);
-				return (0);
-			}
-			j++;
-		}
-		i++;
+		ft_free_tab(copy);
+		return (0);
 	}
 	ft_free_tab(copy);
 	return (1);

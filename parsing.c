@@ -18,15 +18,22 @@ t_coord	*parsing(int fd)
 	char	*info;
 	t_coord	*map;
 
-	map = malloc(1 * sizeof(t_coord));
+	map = malloc(sizeof(t_coord));
 	if (!map)
 		return (NULL);
 	map->map = malloc(10000 * sizeof(char *));
+	if (!map->map)
+	{
+		free(map);
+		return (NULL);
+	}
 	i = 0;
-	while ((info = get_next_line(fd)) != NULL)
+	info = get_next_line(fd);
+	while (info != NULL)
 	{
 		map->map[i] = info;
 		i++;
+		info = get_next_line(fd);
 	}
 	map->map[i] = NULL;
 	return (map);

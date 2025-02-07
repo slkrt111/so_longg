@@ -17,14 +17,14 @@ int	main(int ac, char **av)
 	int		fd;
 	t_data	*data;
 
-	if (ac != 2)
-		return (write(2, "Error\n", 6), 0);
+	if (ac != 2 || valid_extension(av[1]) == 0)
+		return (write(2, "extension or arg error\n", 24), 0);
 	data = malloc(sizeof(t_data));
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 	{
 		free (data);
-		return (write(2, "Error\n", 6), 0);
+		return (write(2, "Error file not found\n", 22), 0);
 	}
 	data->map = parsing(fd);
 	close(fd);
@@ -42,16 +42,36 @@ int	main(int ac, char **av)
 }
 
 void	setandrender(t_data *data)
-{
+{	
+	set_img(data);
+	set_img2(data);
+	if (img_valid_name(data) == 0)
+	{
+		write(2, "Error img no valid\n", 20);
+		destroy_all(data);
+		return ;
+	}
 	data->mlx_win = mlx_new_window(data->mlx_ptr, data->map->x * 80,
 			data->map->y * 80, "so_long");
 	data->count = 0;
-	set_img(data);
-	set_img2(data);
 	render_all(data);
 	mlx_loop_hook(data->mlx_ptr, &render_all, data);
 	mlx_hook(data->mlx_win, 17, 1L << 0, destroy_all, data);
 	mlx_hook(data->mlx_win, 2, 1L << 0, &key_press, data);
 	mlx_loop(data->mlx_ptr);
 	destroy_all(data);
+}
+
+int	valid_extension(char *param)
+{
+	int	len;
+
+	if (!param)
+		return (0);
+	len = ft_strlen(param);
+	if (len < 4)
+		return (0);
+	if (param[len - 1] != 'r' || param[len - 2] != 'e' || param[len - 3] != 'b' || param[len - 4] != '.')
+		return (0);
+	return (1);
 }

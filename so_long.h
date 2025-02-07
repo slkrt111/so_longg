@@ -167,6 +167,10 @@ void	destroy_img2(t_data *data);
 int		soft_free(t_data *data);
 int		after_floodfill(t_coord *map, char **copy, int i, int j);
 void	setandrender(t_data *data);
+int		img_valid_name(t_data *data);
+int		valid_extension(char *param);
+
+
 
 #endif
 
